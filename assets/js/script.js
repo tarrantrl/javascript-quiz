@@ -35,16 +35,37 @@ var quizQuestionTextEl = document.querySelector("#quiz-question-text");
 var quizQuestionListEl = document.querySelector("#quiz-question-list");
 // get correct alert p element
 var correctAlertEl = document.querySelector("#correct-alert");
+// get time display
+var timeDisplayEl = document.querySelector("#time-display");
 // create var to track current question index
 var currentQuestion = 0;
+// create var for time left
+var timeLeft = 75;
 
 // function to start quiz on button click
 var startQuiz = function(event){
     // update question text 
     updateQuizQuestion(currentQuestion);
     // start time
-
+    countDown();
 }
+
+// function to decrement timer
+var countDown = function (){
+    // set timer to 75
+    timeDisplayEl.textContent = timeLeft;
+    
+    var timeInterval = setInterval(function(){
+        if (timeLeft > 0){
+            timeDisplayEl.textContent = --timeLeft;
+            //console.log(timeLeft);
+        }
+        else {
+            clearInterval(timeInterval);
+        }
+    }, 1000);
+}
+
 
 // function to add question text and question answer options to html
 var updateQuizQuestion = function(index){
@@ -103,9 +124,7 @@ var questionAnswerHandler = function(event){
     } 
     else if (currentQuestion = questions.length){
         // end function
-    }
-    
-    
+    }    
 }
 
 // add click event listener to start button 
