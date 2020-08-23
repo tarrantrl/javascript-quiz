@@ -35,11 +35,14 @@ var quizQuestionTextEl = document.querySelector("#quiz-question-text");
 var quizQuestionListEl = document.querySelector("#quiz-question-list");
 // get correct alert p element
 var correctAlertEl = document.querySelector("#correct-alert");
+// create var to track current question index
+var currentQuestion = 0;
 
 // function to start quiz on button click
 var startQuiz = function(event){
     // update question text 
-    updateQuizQuestion(0);
+    updateQuizQuestion(currentQuestion);
+    // start time
 
 }
 
@@ -47,6 +50,8 @@ var startQuiz = function(event){
 var updateQuizQuestion = function(index){
     // update question text
     quizQuestionTextEl.textContent = questions[index].question;
+    // remove any previous answers in the ul
+    quizQuestionListEl.innerHTML = "";
     // iterate through answers
     for (var i = 0; i < questions[index].answers.length; i++){
         // create button
@@ -83,10 +88,23 @@ var questionAnswerHandler = function(event){
         if (selectedAnswerValue === questions[questionNumber].correct){
             // if correct, alert correct
             correctAlertEl.textContent = "correct";
+            
         } else {
+            // if wrong, alert wrong
             correctAlertEl.textContent = "wrong";
+            // decrease time
         }
     }
+    // increment question counter
+    currentQuestion++;
+    // load the next question if there are still quesitons
+    if (currentQuestion < questions.length){
+        updateQuizQuestion(currentQuestion);
+    } 
+    else if (currentQuestion = questions.length){
+        // end function
+    }
+    
     
 }
 
