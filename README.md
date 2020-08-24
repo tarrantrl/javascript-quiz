@@ -4,4 +4,4 @@ This webpage presents a timed quiz covering JavaScript basics. The user has 75 s
 
 ![Screenshot of JavaScript Quiz](/assets/images/JavaScriptQuizScreenshot.png)
 
-[View the JavaScript zuiz here.](https://tarrantrl.github.io/javascript-quiz/)
+[View the JavaScript quiz here.](https://tarrantrl.github.io/javascript-quiz/)
