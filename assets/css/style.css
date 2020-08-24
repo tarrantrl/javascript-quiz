@@ -1,0 +1,72 @@
+/* General element styles */
+* {
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    margin: 2.5px;
+}
+
+/* Header styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 10px;
+    background-color:#08b3bf;
+    line-height: 1.5;
+}
+
+/* Main content styles */
+main {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+}
+/* Create classes to put content in the center or to the left */
+.content-wrapper-center {
+    justify-content: center;
+}
+
+.content-wrapper-left {
+    display: flex;
+    width: 80%;
+    justify-content: flex-start;
+}
+
+/* Button styles */
+button {
+    padding: 10px;
+    background-color: #08b3bf;
+    color: black;
+    border: none;
+    border-radius: 20px;
+    font-size: larger;
+}
+
+button:hover {
+    background-color: #074d52;
+    color: white;
+}
+
+/* Correct alert p styles */
+#correct-alert {
+    margin-top: 10px;
+    color: #494a4a;
+    font-size: larger;
+    font-style: italic;
+}
+
+#quiz-question-text {
+    margin-bottom: 10px;
+}
+
+#save-score-name {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

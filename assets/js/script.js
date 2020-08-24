@@ -41,6 +41,8 @@ var timeDisplayEl = document.querySelector("#time-display");
 var highScoreDisplayEl = document.querySelector("#high-score-display");
 // get last score display
 var lastScoreDisplayEl = document.querySelector("#last-score-display");
+// get content wrapper
+var contentWrapperEl = document.querySelector(".content-wrapper");
 // create var to track current question index
 var currentQuestion = 0;
 // create var for time left
@@ -58,6 +60,8 @@ var startQuiz = function(event){
     countDown();
     // remove the start button
     startButtonEl.remove();
+    // remove center tag from content and add left tag
+    contentWrapperEl.className = "content-wrapper content-wrapper-left";
 }
 
 // function to decrement timer
@@ -66,20 +70,24 @@ var countDown = function (){
     timeDisplayEl.textContent = timeLeft;
     // create setInterval function to decrement time
     var timeInterval = setInterval(function(){
-        if (timeLeft > 0){
+        if (timeLeft > 0 && currentQuestion != questions.length){
             // decrement timer
-            timeDisplayEl.textContent = --timeLeft;
+            --timeLeft;
+            timeDisplayEl.textContent = timeLeft;
             //console.log(timeLeft);
         }
-        else {
+        // if time is 0
+        else if (timeLeft === 0){
             clearInterval(timeInterval);
-            // if time runs out, end the game
+            // end the game
             endGame();
         }
         // if there are no more questions, stop timer
-        if (currentQuestion == questions.length){
+        else if (currentQuestion == questions.length){
             // stop timer
             clearInterval(timeInterval);
+            // update time display
+            timeDisplayEl.textContent = timeLeft;
         }
     }, 1000);
 }
@@ -159,7 +167,7 @@ var endGame = function(){
     var nameInputEl = document.createElement("input");
     nameInputEl.setAttribute("type", "text");
     nameInputEl.setAttribute("name", "player-name");
-    nameInputEl.setAttribute("placeholder", "Your name");
+    nameInputEl.setAttribute("placeholder", "Your initials");
     nameInputEl.setAttribute("id", "save-score-name");
     // create form for name input
     var nameInputFormEl = document.createElement("form");
@@ -180,6 +188,8 @@ var endGame = function(){
     nameInputFormEl.appendChild(scoreListItemEl);
     // append form to list
     quizQuestionListEl.appendChild(nameInputFormEl);
+    // remove left tag from content and add center tag
+    contentWrapperEl.className = "content-wrapper content-wrapper-center";
 }
 
 // function to save name and score in local storage
@@ -191,7 +201,7 @@ var saveScore = function(event){
     if (!name){
         // stop form submission and ask user to try again
         event.preventDefault();
-        alert("Please enter a name");
+        alert("Please enter your initials");
     } 
     // otherwise, save name and score
     else {

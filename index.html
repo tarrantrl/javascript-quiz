@@ -8,20 +8,28 @@
 </head>
 <body>
     <header>
-        <h1>JavaScript Quiz</h1>
-        <p id="high-score-display"></p>
-        <p id="last-score-display"></p>
-        <p>Time: <span id="time-display">0</span></p>
+        <div class="left-side-header">
+            <h1>JavaScript Quiz</h1>
+            <p>Time: <span id="time-display">0</span></p>
+        </div>
+        <div class="scores-container">
+            <br>
+            <p id="high-score-display"></p>
+            <p id="last-score-display"></p>
+        </div>
+        
     </header>
     <main class="main-content" id="main-content">
-        <button id="start-btn" class="btn">Start Quiz</button>
-        <h2 id="quiz-question-text"></h2>
-        <ul id="quiz-question-list" class="questions"></ul>
-        <p id="correct-alert"></p>
+        <div class="content-wrapper content-wrapper-center">
+            <button id="start-btn" class="btn">Start Quiz</button>
+            <div class="content-container">
+                <h2 id="quiz-question-text"></h2>
+                <ul id="quiz-question-list" class="questions"></ul>
+                <p id="correct-alert"></p>
+            </div>
+            
+        </div>
     </main>
-    <footer>
-
-    </footer>
     <script src="assets/js/script.js"></script>
 </body>
 </html>
