@@ -37,6 +37,10 @@ var quizQuestionListEl = document.querySelector("#quiz-question-list");
 var correctAlertEl = document.querySelector("#correct-alert");
 // get time display
 var timeDisplayEl = document.querySelector("#time-display");
+// get high score display
+var highScoreDisplayEl = document.querySelector("#high-score-display");
+// get last score display
+var lastScoreDisplayEl = document.querySelector("#last-score-display");
 // create var to track current question index
 var currentQuestion = 0;
 // create var for time left
@@ -180,8 +184,39 @@ var endGame = function(){
 var saveScore = function(event){
     // get name entered on 
     var name = document.querySelector("#save-score-name").value;
-    if (name === null){
-        
+    //console.log(name);
+    // if no name is entered
+    if (!name){
+        // stop form submission and ask user to try again
+        event.preventDefault();
+        alert("Please enter a name");
+    } 
+    // otherwise, save name and score
+    else {
+        localStorage.setItem("name-last", name);
+        localStorage.setItem("score-last", timeLeft);
+    }
+    // check if current score is higher than high score
+    var scoreHigh = localStorage.getItem("score-high");
+    if (scoreHigh < timeLeft){
+        localStorage.setItem("name-high", name);
+        localStorage.setItem("score-high", timeLeft);
+    }
+}
+
+var fillScores = function(){
+    // get name and score from localStorage
+    var nameLast = localStorage.getItem("name-last");
+    var scoreLast = localStorage.getItem("score-last");
+    // if the name and score are not null
+    if (nameLast && scoreLast){
+        lastScoreDisplayEl.textContent = "Last score: " + scoreLast + " by " + nameLast;
+    }
+    // get high score and name from localStorage
+    var nameHigh = localStorage.getItem("name-high");
+    var scoreHigh = localStorage.getItem("score-high");
+    if (nameHigh && scoreHigh){
+        highScoreDisplayEl.textContent = "High score: " + scoreHigh + " by " + nameHigh;
     }
 }
 
@@ -193,3 +228,5 @@ quizQuestionListEl.addEventListener("click", questionAnswerHandler);
 
 // add submit event listener to ul
 quizQuestionListEl.addEventListener("submit", saveScore);
+
+fillScores();
