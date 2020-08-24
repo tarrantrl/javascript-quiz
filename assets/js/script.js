@@ -44,6 +44,10 @@ var timeLeft = 75;
 
 // function to start quiz on button click
 var startQuiz = function(event){
+    // set timeLeft
+    timeLeft = 75;
+    // set current question
+    currentQuestion = 0;
     // update question text 
     updateQuizQuestion(currentQuestion);
     // start time
@@ -54,18 +58,25 @@ var startQuiz = function(event){
 var countDown = function (){
     // set timer to 75
     timeDisplayEl.textContent = timeLeft;
-    
+    // create setInterval function to decrement time
     var timeInterval = setInterval(function(){
         if (timeLeft > 0){
+            // decrement timer
             timeDisplayEl.textContent = --timeLeft;
             //console.log(timeLeft);
         }
         else {
             clearInterval(timeInterval);
+            // if time runs out, end the game
+            endGame();
+        }
+        // if there are no more questions, stop timer
+        if (currentQuestion == questions.length){
+            // stop timer
+            clearInterval(timeInterval);
         }
     }, 1000);
 }
-
 
 // function to add question text and question answer options to html
 var updateQuizQuestion = function(index){
@@ -108,12 +119,12 @@ var questionAnswerHandler = function(event){
         // determine if the answer is correct
         if (selectedAnswerValue === questions[questionNumber].correct){
             // if correct, alert correct
-            correctAlertEl.textContent = "correct";
-            
+            correctAlertEl.textContent = "correct"; 
         } else {
             // if wrong, alert wrong
             correctAlertEl.textContent = "wrong";
             // decrease time
+            timeLeft -= 10;
         }
     }
     // increment question counter
@@ -122,9 +133,56 @@ var questionAnswerHandler = function(event){
     if (currentQuestion < questions.length){
         updateQuizQuestion(currentQuestion);
     } 
-    else if (currentQuestion = questions.length){
-        // end function
+    else if (currentQuestion == questions.length){
+        // if there are no more questions, end the game
+        endGame();
     }    
+}
+
+var endGame = function(){
+    // delete questions
+    quizQuestionListEl.innerHTML = "";
+    quizQuestionTextEl.textContent = "The game is over.";
+    // create li to display score
+    var scoreDisplay = document.createElement("li");
+    scoreDisplay.textContent = "Your score is " + timeLeft;
+    quizQuestionListEl.appendChild(scoreDisplay);
+    // create li to prompt user to save name
+    var nameListEl = document.createElement("li");
+    // create input for name
+    var nameInputEl = document.createElement("input");
+    nameInputEl.setAttribute("type", "text");
+    nameInputEl.setAttribute("name", "player-name");
+    nameInputEl.setAttribute("placeholder", "Your name");
+    nameInputEl.setAttribute("id", "save-score-name");
+    // create form for name input
+    var nameInputFormEl = document.createElement("form");
+    // append name input to list item
+    nameListEl.appendChild(nameInputEl);
+    // append li to form
+    nameInputFormEl.appendChild(nameInputEl);
+    // create submit button for saving the score
+    var scoreSubmitBtnEl = document.createElement("button");
+    scoreSubmitBtnEl.setAttribute("type", "submit");
+    scoreSubmitBtnEl.setAttribute("data-button-type", "save-score");
+    scoreSubmitBtnEl.textContent = "Save score";
+    // create list item for score button
+    var scoreListItemEl = document.createElement("li");
+    // append button to li
+    scoreListItemEl.appendChild(scoreSubmitBtnEl);
+    // append li to form
+    nameInputFormEl.appendChild(scoreListItemEl);
+    // append form to list
+    quizQuestionListEl.appendChild(nameInputFormEl);
+}
+
+// function to save name and score in local storage
+var saveScore = function(event){
+    // get name entered on 
+    var name = document.querySelector("#save-score-name").value;
+    if (name === null){
+        
+    }
 }
 
 // add click event listener to start button 
@@ -132,3 +190,6 @@ startButtonEl.addEventListener("click", startQuiz);
 
 // add click event listener to ul
 quizQuestionListEl.addEventListener("click", questionAnswerHandler);
+
+// add submit event listener to ul
+quizQuestionListEl.addEventListener("submit", saveScore);
