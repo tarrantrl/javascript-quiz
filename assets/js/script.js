@@ -205,6 +205,10 @@ var saveScore = function(event){
     } 
     // otherwise, save name and score
     else {
+        // if timeLeft is negative, make it 0 before saving
+        if (timeLeft < 0){
+            timeLeft = 0;
+        }
         localStorage.setItem("name-last", name);
         localStorage.setItem("score-last", timeLeft);
     }
