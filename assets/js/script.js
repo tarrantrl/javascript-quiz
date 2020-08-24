@@ -56,6 +56,8 @@ var startQuiz = function(event){
     updateQuizQuestion(currentQuestion);
     // start time
     countDown();
+    // remove the start button
+    startButtonEl.remove();
 }
 
 // function to decrement timer
@@ -123,12 +125,12 @@ var questionAnswerHandler = function(event){
         // determine if the answer is correct
         if (selectedAnswerValue === questions[questionNumber].correct){
             // if correct, alert correct
-            correctAlertEl.textContent = "correct"; 
+            correctAlertEl.textContent = "You answered the last quesiton correctly!"; 
         } else {
             // if wrong, alert wrong
-            correctAlertEl.textContent = "wrong";
+            correctAlertEl.textContent = "You answered the last question wrong.";
             // decrease time
-            timeLeft -= 10;
+            timeLeft -= 15;
         }
     }
     // increment question counter
